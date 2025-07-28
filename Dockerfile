@@ -1,22 +1,20 @@
-FROM node:18-alpine
+# Base image
+FROM node:18
 
 # Create app directory
 WORKDIR /app
 
-# Copy both package.json and package-lock.json (if exists)
+# Copy package files
 COPY package*.json ./
 
-# ✅ Remove `--production`, let it install all (safer for bots)
+# Install dependencies
 RUN npm install
 
-# Copy rest of the code
+# Copy the rest of the code
 COPY . .
 
-# Create download folder
-RUN mkdir -p downloads
-
-# Expose port
+# Expose the port
 EXPOSE 3000
 
-# Start command
-CMD ["node", "index.js"]
+# Start the bot
+CMD ["npm", "start"]
