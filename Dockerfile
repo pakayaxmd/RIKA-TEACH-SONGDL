@@ -1,23 +1,22 @@
-# Use official Node.js LTS version as base image
 FROM node:18-alpine
 
 # Create app directory
 WORKDIR /app
 
-# Copy package.json and package-lock.json (if exists)
+# Copy both package.json and package-lock.json (if exists)
 COPY package*.json ./
 
-# Install dependencies
-RUN npm install --production
+# ✅ Remove `--production`, let it install all (safer for bots)
+RUN npm install
 
-# Copy rest of the project files
+# Copy rest of the code
 COPY . .
 
-# Create downloads folder (optional)
+# Create download folder
 RUN mkdir -p downloads
 
-# Expose port 3000
+# Expose port
 EXPOSE 3000
 
-# Start the bot and API server
+# Start command
 CMD ["node", "index.js"]
